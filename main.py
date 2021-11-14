@@ -26,7 +26,7 @@ def vtop(fromadd):
         if ret == False:
             break
         #cv2.imshow("results",frame)
-        cv2.imwrite("/Users/caizhen/Desktop/faceswap/picture_before/" + str(c) +  '.jpg',frame)
+        cv2.imwrite(current_path + "/picture_before/" + str(c) +  '.jpg',frame)
         c = c + 1
         cv2.waitKey(1)
         if cv2.waitKey(10) & 0xff == ord('q'):
@@ -40,14 +40,13 @@ def ptov(size):
 
     #测试
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    video_writer = cv2.VideoWriter(filename = '/Users/caizhen/Desktop/faceswap/video_output.mp4',fourcc = fourcc,fps = fps,frameSize = (size[1],size[0]))
+    video_writer = cv2.VideoWriter(filename = current_path + '/video_output.mp4',fourcc = fourcc,fps = fps,frameSize = (size[1],size[0]))
 
-    #video_writer = cv2.VideoWriter(filename = '/Users/caizhen/Desktop/faceswap/video_output.avi',fourcc = fourcc,fps = fps,frameSize = (size[1],size[0]))
     for i in range(0,6000):
         p = i
-        if os.path.exists('/Users/caizhen/Desktop/faceswap/picture_after/' + str(p) + '.jpg'):
+        if os.path.exists(current_path + '/picture_after/' + str(p) + '.jpg'):
         #if os.path.exists(str(fromadd) + '/picture' + str(p) + '.jpg'):
-            img = cv2.imread('/Users/caizhen/Desktop/faceswap/picture_after/' + str(p) + '.jpg')
+            img = cv2.imread(current_path + '/picture_after/' + str(p) + '.jpg')
             #cv2.waitKey(100)
             #print(img.shape)
             video_writer.write(img)
@@ -170,8 +169,8 @@ def read_im_and_landmarks(fname,i):
     im1 = cv2.imread(fname, cv2.IMREAD_COLOR)
     #t = get_landmark(im1)
 
-    if os.path.exists('/Users/caizhen/Desktop/faceswap/picture_before/' + str(i + 1) + '.jpg'):
-        im2 = cv2.imread('/Users/caizhen/Desktop/faceswap/picture_before/' + str(i + 1) + '.jpg',cv2.IMREAD_COLOR)
+    if os.path.exists(current_path + '/picture_before/' + str(i + 1) + '.jpg'):
+        im2 = cv2.imread(current_path + '/picture_before/' + str(i + 1) + '.jpg',cv2.IMREAD_COLOR)
         
         for j in range(0,im1.shape[0]):
             im1[j][0] = (im1[j][0] + im2[j][0]) / 2
@@ -182,7 +181,7 @@ def read_im_and_landmarks(fname,i):
             im2[j][2] = (im1[j][2] + im2[j][2]) / 2
             if(j > 300):
                 break
-        cv2.imwrite('/Users/caizhen/Desktop/faceswap/picture_before/' + str(i + 1) + '.jpg',im2)
+        cv2.imwrite(current_path + '/picture_before/' + str(i + 1) + '.jpg',im2)
     else:
         print(1)
     t = get_landmark(im1)
@@ -191,12 +190,12 @@ def read_im_and_landmarks(fname,i):
 #对输出图像做N帧对均值
 def doudong():
     i = 4
-    while (os.path.exists('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i) + '.jpg')):
-        im1 = cv2.imread('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 4) + '.jpg',cv2.IMREAD_COLOR)
-        im2 = cv2.imread('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 3) + '.jpg',cv2.IMREAD_COLOR)
-        im3 = cv2.imread('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 2) + '.jpg',cv2.IMREAD_COLOR)
-        im4 = cv2.imread('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 1) + '.jpg',cv2.IMREAD_COLOR)
-        im5 = cv2.imread('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i) + '.jpg',cv2.IMREAD_COLOR)
+    while (os.path.exists(current_path + '/picture_after/' + str(i) + '.jpg')):
+        im1 = cv2.imread(current_path + '/picture_after/' + str(i - 4) + '.jpg',cv2.IMREAD_COLOR)
+        im2 = cv2.imread(current_path + '/picture_after/' + str(i - 3) + '.jpg',cv2.IMREAD_COLOR)
+        im3 = cv2.imread(current_path + '/picture_after/' + str(i - 2) + '.jpg',cv2.IMREAD_COLOR)
+        im4 = cv2.imread(current_path + '/picture_after/' + str(i - 1) + '.jpg',cv2.IMREAD_COLOR)
+        im5 = cv2.imread(current_path + '/picture_after/' + str(i) + '.jpg',cv2.IMREAD_COLOR)
         #print(im1)
         for j in range(0,im1.shape[0]):
             im1[j][0] = (im1[j][0] + im2[j][0] + im3[j][0] + im4[j][0] + im5[j][0]) / 5
@@ -221,17 +220,17 @@ def doudong():
             im5[j][3] = (im1[j][3] + im2[j][3] + im3[j][3] + im4[j][3] + im5[j][3]) / 5
             if (j > 300):
                 break
-        cv2.imwrite('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 4) + '.jpg', im1)
-        cv2.imwrite('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 3) + '.jpg', im2)
-        cv2.imwrite('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 2) + '.jpg', im3)
-        cv2.imwrite('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i - 1) + '.jpg', im4)
-        cv2.imwrite('/Users/caizhen/Desktop/faceswap/picture_after/' + str(i) + '.jpg', im5)
+        cv2.imwrite(current_path + '/picture_after/' + str(i - 4) + '.jpg', im1)
+        cv2.imwrite(current_path + '/picture_after/' + str(i - 3) + '.jpg', im2)
+        cv2.imwrite(current_path + '/picture_after/' + str(i - 2) + '.jpg', im3)
+        cv2.imwrite(current_path + '/picture_after/' + str(i - 1) + '.jpg', im4)
+        cv2.imwrite(current_path + '/picture_after/' + str(i) + '.jpg', im5)
         i = i + 1
 
 
 def testvideo():
     #imgtra,landmarks_tra = read_im_and_landmarks('/Users/caizhen/Desktop/faceswap/testpicture.jpg')
-    imgtra = cv2.imread('/Users/caizhen/Desktop/faceswap/testpicture.jpg',cv2.IMREAD_COLOR)
+    imgtra = cv2.imread(current_path + '/testpicture.jpg',cv2.IMREAD_COLOR)
     imgtra = cv2.resize(imgtra, (imgtra.shape[1] * SCALE_FACTOR,imgtra.shape[0] * SCALE_FACTOR))
     t = cv2.GaussianBlur(imgtra,(11,11),0)
     t = cv2.Canny(imgtra,10,70)
@@ -243,21 +242,19 @@ def testvideo():
     #print(landmarks_tra)
     for i in range(0,6000):
         p = i
-        if os.path.exists('/Users/caizhen/Desktop/faceswap/picture_before/' + str(p) + '.jpg'):
+        if os.path.exists(current_path + '/picture_before/' + str(p) + '.jpg'):
         #if os.path.exists(str(fromadd) + '/picture' + str(p) + '.jpg'):
-            imgadd = '/Users/caizhen/Desktop/faceswap/picture_before/' + str(p) + '.jpg'
-            #imgaddnext = '/Users/caizhen/Desktop/faceswap/picture_before/' + str(p + 1) + '.jpg'
+            imgadd = current_path + '/picture_before/' + str(p) + '.jpg'
             #print(imgadd)
 
             cv2.waitKey(100)
             im1,landmarks1 = read_im_and_landmarks(imgadd,p)
 
-            #landmarks1 = cv2.imread('/Users/caizhen/Desktop/faceswap/landmarks/' + str(p) + '.jpg')
             #im1 = cv2.imread(imgadd, cv2.IMREAD_COLOR)
             #im1 = cv2.resize(im1, (im1.shape[1] * SCALE_FACTOR, im1.shape[0] * SCALE_FACTOR))
             #landmarks1 = face_recognition.face_landmarks(im1)
             if type(landmarks1) == int:
-                cv2.imwrite("/Users/caizhen/Desktop/faceswap/picture_after/" + str(i) + ".jpg", im1)
+                cv2.imwrite(current_path + "/picture_after/" + str(i) + ".jpg", im1)
                 continue
             #print(landmarks1)
 
@@ -278,7 +275,7 @@ def testvideo():
             #cv2.imshow("combined_mask",combined_mask)
             warped_imtra = warp_im(imgtra,M,im1.shape)
 
-            cv2.imwrite("/Users/caizhen/Desktop/faceswap/warped_imtra/" + str(i) + ".jpg",warped_imtra)
+            cv2.imwrite(current_path + "/warped_imtra/" + str(i) + ".jpg",warped_imtra)
             #cv2.imshow("warped_imtra",warped_imtra)
             #cv2.imshow('imshow',warped_mask)
             output_im = im1 * (1.0 - combined_mask) + warped_imtra * combined_mask
@@ -293,7 +290,7 @@ def testvideo():
                 output_im[j, 0] = (output_im[j, 0] + im1[j, 0]) / 2
                 output_im[j, 1] = (output_im[j, 1] + im1[j, 1]) / 2
                 output_im[j, 2] = (output_im[j, 2] + im1[j, 2]) / 2
-            cv2.imwrite("/Users/caizhen/Desktop/faceswap/picture_after/" + str(i) + ".jpg",output_im)
+            cv2.imwrite(current_path + "/picture_after/" + str(i) + ".jpg",output_im)
         else:
             break
 
@@ -308,7 +305,7 @@ if __name__ == '__main__':
     #filter_test()
     #testvideo()
     #doudong()
-    img = cv2.imread("/Users/caizhen/Desktop/faceswap/picture_after/0.jpg")
+    img = cv2.imread(current_path + "/picture_after/0.jpg")
     #print(face_recognition.face_landmarks(img))
     size = img.shape[0:2]
     #t = cv2.GaussianBlur(img,(11,11),0)
